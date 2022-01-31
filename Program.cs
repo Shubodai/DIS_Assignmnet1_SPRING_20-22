@@ -6,6 +6,7 @@
  * It was a great oppurtinity to learn and explore the concepts of strings and arrays.
  */
 using System;
+using System.Linq;
 
 namespace DIS_Assignmnet1_SPRING_20_22
 {
@@ -87,19 +88,23 @@ s consists of uppercase and lowercase letters
             try
             {             
                 String final_string = "";
-                for (int i = 0; i < s.Length; i++) //Iterating through the entire string
+                if (s.Length >= 0 && s.Length <= 10000) // constraint check for length
                 {
-                    if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u') //Checking for presence of vowels(lower case)
+                    for (int i = 0; i < s.Length; i++) //Iterating through the entire string
                     {
-                        final_string = final_string + "";
+                        if (s[i] == 'a' || s[i] == 'e' || s[i] == 'i' || s[i] == 'o' || s[i] == 'u') //Checking for presence of vowels(lower case)
+                        {
+                            final_string = final_string + "";
+                        }
+                        else if (s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U') //Checking for presence of vowels(upper case)
+                        {
+                            final_string = final_string + "";
+                        }
+                        else
+                            final_string = final_string + s[i];//Creating the final string / result 
                     }
-                    else if (s[i] == 'A' || s[i] == 'E' || s[i] == 'I' || s[i] == 'O' || s[i] == 'U') //Checking for presence of vowels(upper case)
-                            {
-                        final_string = final_string + "";
-                    }
-                    else
-                        final_string = final_string + s[i];//Creating the final string / result 
                 }
+                    
                 return final_string;
             }
             catch (Exception)
@@ -183,21 +188,25 @@ s consists of uppercase and lowercase letters
             {
                 int x = 0; // variable to store the sum of unique value in array
                 int lg = bull_bucks.Length; //getting the length of string
-                foreach (int a in bull_bucks)
+                if (lg >= 1 || lg <= 100)
                 {
-                    int count = 0;
-                    for (int i = 0; i < lg; i++) //iterating through the entire integer array
+                    foreach (int a in bull_bucks)
                     {
-                        if (a == bull_bucks[i])
+                        int count = 0;
+                        for (int i = 0; i < lg; i++) //iterating through the entire integer array
                         {
-                            count = count + 1; //adding the unique elements
+                            if (a == bull_bucks[i])
+                            {
+                                count = count + 1; //adding the unique elements
+                            }
+                        }
+                        if (count == 1) //checking if integer array element with count = 1
+                        {
+                            x = x + a; // adding unique values to sum
                         }
                     }
-                    if (count == 1) //checking if integer array element with count = 1
-                    {
-                        x = x + a; // adding unique values to sum
-                    }
                 }
+                    
                 return x;
             }
             catch (Exception)
@@ -268,20 +277,36 @@ s consists of uppercase and lowercase letters
                 int[] y = new int[bulls_string.Length]; //to store length of string name : bulls_string
                 char[] final = new char[bulls_string.Length]; //creating a character array with length equal to bulls_string
                 int z = 0;
-                foreach (char c in bulls_string) //used to traverse through the given string
+                int strLen = bulls_string.Length;
+                int indicesLen = indices.Length;
+                if(strLen>=1 && strLen<=100 && indicesLen>=1 && indicesLen <= 100) //Length constarint
                 {
-                    x[z] = c; // copying each character into char array x
-                    z++;
-                }
-                for (int i = 0; i < bulls_string.Length; i++) //mapping the indices to characters app.
-                {
-                    final[indices[i]] = x[i];
-                }
-                foreach (char c in final) //to store result
-                {
-                    reversedstring = reversedstring + c.ToString(); //converting char c to string using inbuilt function
-                 }
+                    if (bulls_string.Any(char.IsLower)) //lower case constraint
+                    {
+                        if (indices.Distinct().Count() == indices.Length) //Distinct indices constraint
+                        {
+                            foreach (char c in bulls_string) //used to traverse through the given string
+                            {
+                                bool caps = char.IsUpper(c);
+                                x[z] = c; // copying each character into char array x
+                                z++;
+                            }
 
+
+                            for (int i = 0; i < bulls_string.Length; i++) //mapping the indices to characters app.
+                            {
+                                final[indices[i]] = x[i];
+                            }
+                            foreach (char c in final) //to store result
+                            {
+                                reversedstring = reversedstring + c.ToString(); //converting char c to string using inbuilt function
+                            }
+                        }
+                            
+                    }
+                    
+                }
+                
                 return reversedstring;
 
             }
@@ -319,23 +344,28 @@ s consists of uppercase and lowercase letters
             {
                 String preStr = "";
                 int breakpoint = 0; // creating a new integer to store position of char ch
-                for (int i = 0; i < bulls_string6.Length; i++) // traversing through entire string  
+                if (bulls_string6.Length > 1 && bulls_string6.Length < 250)
                 {
-                    if (bulls_string6[i] == ch) //condition to match string value to given input char
+                    for (int i = 0; i < bulls_string6.Length; i++) // traversing through entire string  
                     {
-                        int length = i;
-                        breakpoint = 1; 
-                        while (length >= 0) // copying the string in reverse order in preStr
+                        if (bulls_string6[i] == ch) //condition to match string value to given input char
                         {
-                            preStr = preStr + bulls_string6[length];
-                            length--;
+                            int length = i;
+                            breakpoint = 1;
+                            while (length >= 0) // copying the string in reverse order in preStr
+                            {
+                                preStr = preStr + bulls_string6[length];
+                                length--;
+                            }
+                        }
+                        if (breakpoint == 1) // copying the remaining part of string to preStr
+                        {
+                            preStr = preStr + bulls_string6[i];
                         }
                     }
-                    if (breakpoint == 1) // copying the remaining part of string to preStr
-                    {
-                        preStr = preStr + bulls_string6[i];
-                    }
                 }
+
+                    
                 return preStr;
             }
             catch (Exception)
